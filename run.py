@@ -2,6 +2,17 @@ import requests
 
 api_key = '6a3f2cc91e7c4aa8d6506c5f08f260e4'
 
+def get_weather(location):
+    """
+    Gets weather depending on previous users input!
+    """
+    weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={location}&units=metric&APPID={api_key}")
+    weather = weather_data.json()['weather'][0]['main']
+    temp = weather_data.json()['main']['temp']
+    # print(weather, temp)
+    # print(weather_data.json())
+
+    return weather, temp
 
 def location_and_activity():
     """
@@ -31,22 +42,10 @@ def location_and_activity():
                     print("Please select the type of climbing from the options.\n")
             
         elif activity.lower() == "hiking":
-            print("You need hiking gear\n")
+            print("You need hiking gear.\n")
             return location, activity, climbing
         else: 
             print("Please choose one of the activities above.\n")
-    
-
-# user_location = input('Enter city or location:\n')
-# activity = input()
-
-# weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={user_location}&units=metric&APPID={api_key}")
-
-# weather = weather_data.json()['weather'][0]['main']
-# temp = weather_data.json()['main']['temp']
-
-# # print(weather_data.json())
-
 
 
 def main():
@@ -54,8 +53,12 @@ def main():
     Run all the application functions
     """
     location, activity, climbing = location_and_activity()
-    print(location)
-    print(activity)
-    print(climbing)
+    weather, temp = get_weather(location)
+    print(weather)
+    print(temp)
+    # print(location)
+    # print(activity)
+    # print(climbing)
+    
 
 main()
