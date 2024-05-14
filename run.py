@@ -7,7 +7,7 @@ def get_weather(location):
     Gets weather depending on previous users input!
     """
     weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={location}&units=metric&APPID={api_key}")
-    weather = weather_data.json()['weather'][0]['main']
+    weather = weather_data.json()['weather'][0]['description']
     temp = weather_data.json()['main']['temp']
     # print(weather, temp)
     # print(weather_data.json())
@@ -47,15 +47,25 @@ def location_and_activity():
         else: 
             print("Please choose one of the activities above.\n")
 
-
+def handle_weather(weather,activity):
+    """
+    Interpretates the weather information depending on the location and activity to perform.
+    """
+    if (weather != "clear sky"):
+        print(f"You cant go {activity}. The weather is {weather}. Its dangerous!")
+    else:
+        print(f"Perfect day for {acivity} The gear you need is etc etc.")
+    
 def main():
     """
     Run all the application functions
     """
     location, activity, climbing = location_and_activity()
     weather, temp = get_weather(location)
-    print(weather)
-    print(temp)
+    handle_weather(weather,activity)
+    
+    # print(weather)
+    # print(temp)
     # print(location)
     # print(activity)
     # print(climbing)
