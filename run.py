@@ -4,33 +4,38 @@ api_key = '6a3f2cc91e7c4aa8d6506c5f08f260e4'
 
 
 def location_and_activity():
-    location = input("Please enter location:\n")
-    print("Location received. Now, please enter which type of outdoor activity in order to adivse you wisely.\nYou can choose the following: Climbing, Hiking")
-    activity = input("Please enter outdoor activity:")
-    climbing = None
-
-    if (activity == "Climbing" or activity == "climbing"):
-        print("What type of climbing? Trad, Sport or boulder?")
-        climbing = input("Please choose:")
-        if(climbing == "Trad" or climbing == "trad"):
-            print("You need trad gear.")
-        elif(climbing == "sport" or climbing == "sport"):
-             print("You need sport gear.")
-        elif(climbing == "boulder" or climbing == "Boulder"):
-             print("You need boulder gear.")
-        else:
-            print("Please select the type of climbing from the options.")
-    
-    elif(activity == "Hiking" or activity == "hiking"):
-        print("You need hiking gear")
-        return location, activity, climbing
-    else: 
-        print("Please choose one of the activities above.")
-
-   
+    """
+    Gets users location and acivity
+    """
+    location = input("Please enter location: ")
+    print("Location received.\nNow, please enter which type of outdoor activity in order to advise you wisely.\nYou can choose the following: Climbing or Hiking.\n")
+    while True:
         
-    return location, activity, climbing
+        activity = input("Please enter outdoor activity: ")
+        climbing = None
 
+        if activity.lower() == "climbing":
+            while True:
+                print("What type of climbing? Trad, Sport, or Boulder?\n")
+                climbing = input("Please choose: ")
+                if climbing.lower() == "trad":
+                    print("You need trad gear.\n")
+                    return location, activity, climbing
+                elif climbing.lower() == "sport":
+                    print("You need sport gear.\n")
+                    return location, activity, climbing
+                elif climbing.lower() == "boulder":
+                    print("You need boulder gear.\n")
+                    return location, activity, climbing
+                else:
+                    print("Please select the type of climbing from the options.\n")
+            
+        elif activity.lower() == "hiking":
+            print("You need hiking gear\n")
+            return location, activity, climbing
+        else: 
+            print("Please choose one of the activities above.\n")
+    
 
 # user_location = input('Enter city or location:\n')
 # activity = input()
@@ -42,7 +47,15 @@ def location_and_activity():
 
 # # print(weather_data.json())
 
-location, activity, climbing = location_and_activity()
-print(activity)
-print(climbing)
 
+
+def main():
+    """
+    Run all the application functions
+    """
+    location, activity, climbing = location_and_activity()
+    print(location)
+    print(activity)
+    print(climbing)
+
+main()
