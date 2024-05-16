@@ -7,19 +7,28 @@ def get_weather(location):
     Gets weather depending on previous users input!
     """
     weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={location}&units=metric&APPID={api_key}")
-    weather = weather_data.json()['weather'][0]['description']
+    weather = weather_data.json()['weather'][0]['main']
     temp = weather_data.json()['main']['temp']
+    error_code = weather_data.json()['cod']
+
     # print(weather, temp)
+    print(error_code)
     # print(weather_data.json())
 
-    return weather, temp
+    return weather, temp, error_code
 
-def location_and_activity():
+def location_input():
+    """
+    Asks for users desired location and displays weather data.
+    """
+    location = input("Please enter desired location: ")
+    print("Location received.\nNow, please enter which type of outdoor activity in order to advise you wisely.\nYou can choose the following: Climbing or Hiking.\n")
+    return location
+
+def activity_input():
     """
     Gets users location and acivity
     """
-    location = input("Please enter location: ")
-    print("Location received.\nNow, please enter which type of outdoor activity in order to advise you wisely.\nYou can choose the following: Climbing or Hiking.\n")
     while True:
         
         activity = input("Please enter outdoor activity: ")
@@ -31,44 +40,34 @@ def location_and_activity():
                 climbing = input("Please choose: ")
                 if climbing.lower() == "trad":
                     print("You need trad gear.\n")
-                    return location, activity, climbing
+                    return activity, climbing
                 elif climbing.lower() == "sport":
                     print("You need sport gear.\n")
-                    return location, activity, climbing
+                    return activity, climbing
                 elif climbing.lower() == "boulder":
                     print("You need boulder gear.\n")
-                    return location, activity, climbing
+                    return activity, climbing
                 else:
                     print("Please select the type of climbing from the options.\n")
             
         elif activity.lower() == "hiking":
             print("You need hiking gear.\n")
-            return location, activity, climbing
+            return activity, climbing
         else: 
             print("Please choose one of the activities above.\n")
-
-def handle_weather(weather,activity):
-    """
-    Interpretates the weather information depending on the location and activity to perform.
-    """
-    if (weather != "clear sky"):
-        print(f"You cant go {activity}. The weather is {weather}. Its dangerous!")
-    else:
-        print(f"Perfect day for {acivity} The gear you need is etc etc.")
     
 def main():
     """
     Run all the application functions
     """
-    location, activity, climbing = location_and_activity()
-    weather, temp = get_weather(location)
-    handle_weather(weather,activity)
-    
+    location = location_input()
+    activity, climbing = activity_input()
+    weather, temp, error_code = get_weather(location)
+
     # print(weather)
     # print(temp)
     # print(location)
     # print(activity)
     # print(climbing)
-    
 
 main()
