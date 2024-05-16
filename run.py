@@ -24,6 +24,7 @@ def location_input():
     location = input("Please enter desired location: ")
     return location
 
+
 def activity_input():
     """
     Gets users location and acivity
