@@ -65,6 +65,7 @@ def display_weather_basic(weather, temp):
         user_agree = input("Please choose: ")
         if(user_agree == "1"):
             activity_input()
+            return 
         elif(user_agree == "2"):
             print("Program will be terminated.")
             return
