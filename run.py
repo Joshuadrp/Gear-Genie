@@ -22,7 +22,7 @@ def location_input():
     Asks for users desired location and displays weather data.
     """
     location = input("Please enter desired location: ")
-    print("Location received.\nNow, please enter which type of outdoor activity in order to advise you wisely.\nYou can choose the following: Climbing or Hiking.\n")
+    print("""Location received.\nNow, please enter which type of outdoor activity in order to advise you wisely.\nYou can choose the following:\n1.Climbing\n2.Hiking.\n""")
     return location
 
 def activity_input():
@@ -34,23 +34,23 @@ def activity_input():
         activity = input("Please enter outdoor activity: ")
         climbing = None
 
-        if activity.lower() == "climbing":
+        if activity == "1":
             while True:
-                print("What type of climbing? Trad, Sport, or Boulder?\n")
+                print("What type of climbing?\n1.Trad\n2.Sport\n3.Boulder")
                 climbing = input("Please choose: ")
-                if climbing.lower() == "trad":
+                if climbing == "1":
                     print("You need trad gear.\n")
                     return activity, climbing
-                elif climbing.lower() == "sport":
+                elif climbing == "2":
                     print("You need sport gear.\n")
                     return activity, climbing
-                elif climbing.lower() == "boulder":
+                elif climbing == "3":
                     print("You need boulder gear.\n")
                     return activity, climbing
                 else:
                     print("Please select the type of climbing from the options.\n")
             
-        elif activity.lower() == "hiking":
+        elif activity == "2":
             print("You need hiking gear.\n")
             return activity, climbing
         else: 
