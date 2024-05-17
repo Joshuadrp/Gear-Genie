@@ -1,28 +1,24 @@
 import requests
 
 api_key = '6a3f2cc91e7c4aa8d6506c5f08f260e4'
+    
+def get_weather():
+    """
+    Gets weather depending on users input! 
+    """
+    location = input("Please enter desired location: ")
 
-def get_weather(location):
-    """
-    Gets weather depending on previous users input!
-    """
     weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={location}&units=metric&APPID={api_key}")
     weather = weather_data.json()['weather'][0]['main']
     temp = weather_data.json()['main']['temp']
     error_code = weather_data.json()['cod']
+
 
     # print(weather, temp)
     # print(error_code)
     # print(weather_data.json())
 
     return weather, temp, error_code
-
-def location_input():
-    """
-    Asks for users desired location and displays weather data.
-    """
-    location = input("Please enter desired location: ")
-    return location
 
 
 def activity_input():
@@ -78,8 +74,7 @@ def main():
     """
     Run all the application functions
     """
-    location = location_input()
-    weather, temp, error_code = get_weather(location)
+    weather, temp, error_code = get_weather()
     display_weather_basic(weather, temp)
     
     # print(weather)
