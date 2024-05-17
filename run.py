@@ -6,20 +6,24 @@ def get_weather():
     """
     Gets weather depending on users input! 
     """
-    location = input("Please enter desired location: ")
+    while True:
+        location = input("Please enter desired location: ")
+        weather = None
+        temp = None
+        weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={location}&units=metric&APPID={api_key}")
+        error_code = weather_data.json()['cod']
+    
+        if error_code == 200:
+            print("Location is valid.")
+            weather = weather_data.json()['weather'][0]['main']
+            temp = weather_data.json()['main']['temp']
+            return weather, temp
+        else:
+            print("Location is invalid, please provide another one.")
 
-    weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={location}&units=metric&APPID={api_key}")
-    weather = weather_data.json()['weather'][0]['main']
-    temp = weather_data.json()['main']['temp']
-    error_code = weather_data.json()['cod']
-
-
-    # print(weather, temp)
-    # print(error_code)
-    # print(weather_data.json())
-
-    return weather, temp, error_code
-
+        # print(weather, temp)
+        # print(error_code)
+        # print(weather_data.json())
 
 def activity_input():
     """
@@ -74,7 +78,7 @@ def main():
     """
     Run all the application functions
     """
-    weather, temp, error_code = get_weather()
+    weather, temp = get_weather()
     display_weather_basic(weather, temp)
     
     # print(weather)
