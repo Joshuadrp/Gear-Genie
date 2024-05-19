@@ -1,5 +1,22 @@
 import requests
+import gspread
+from google.oauth2.service_account import Credentials
 
+SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+    ]
+
+CREDS = Credentials.from_service_account_file('creds.json')
+SCOPE_CREDS = CREDS.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPE_CREDS)
+SHEET = GSPREAD_CLIENT.open('geargenie')
+
+hiking_gear = SHEET.worksheet('hiking')
+hiking_data = hiking_gear.get_all_values()
+
+# weather api key
 api_key = '6a3f2cc91e7c4aa8d6506c5f08f260e4'
     
 def get_weather():
