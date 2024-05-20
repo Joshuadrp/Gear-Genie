@@ -77,22 +77,27 @@ def activity_input():
                 if climbing.lower() == "trad climbing":
                     print("You need trad gear.\n")
                     column_index = 0 #this will only give the basic gear, need to update it later. 
-                    return climbing, column_index
+                    fetch_gear_data(climbing, column_index)
+                    return
                 elif climbing.lower() == "sport climbing":
                     print("You need sport gear.\n")
                     column_index = 0 #this will only give the basic gear, need to update it later.
-                    return climbing, column_index
+                    fetch_gear_data(climbing, column_index)
+                    return 
+                    
                 elif climbing.lower() == "bouldering":
                     print("You need boulder gear.\n")
                     column_index = 0 #this will only give the basic gear, need to update it later.
-                    return climbing, column_index
+                    fetch_gear_data(climbing, column_index)
+                    return 
                 else:
                     print("Please select the type of climbing from the options.\n")
             
         elif activity.lower() == "hiking":
             print("You need hiking gear.\n")
             column_index = 0 #this will only give the basic gear, need to update it later.
-            return column_index, activity
+            fetch_gear_data(activity, column_index)
+            return
         else: 
             print("Please choose one of the activities above.\n")
 
@@ -104,7 +109,8 @@ def fetch_gear_data(user_activity, column_index):
     """
     gear = SHEET.worksheet(f"{user_activity}").get_all_values()
     column_data = [row[column_index] for row in gear]
-    return column_data
+    print(column_data)
+    return 
 
 def main():
     """
@@ -112,9 +118,10 @@ def main():
     """
     weather, temp = get_weather()
     display_weather_basic(weather, temp)
-    
+
     # column_index, user_activity = activity_input()
     # fetched_gear = fetch_gear_data(user_activity, column_index)
+
     # print(fetched_gear)
     
     # print(weather)
