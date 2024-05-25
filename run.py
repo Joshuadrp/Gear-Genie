@@ -21,7 +21,7 @@ api_key = '6a3f2cc91e7c4aa8d6506c5f08f260e4'
     
 def get_weather():
     """
-    Gets weather depending on users input! 
+    Gets weather from openweathermap API depending on users input! 
     """
     while True:
         location = input("Please enter desired location: ")
@@ -105,7 +105,7 @@ def activity_input():
 
 def fetch_gear_data(user_activity, column_index):
     """
-    Fetch data for hiking and climbing activities.
+    Fetch data from google sheets for hiking and climbing activities.
     """
     gear = SHEET.worksheet(f"{user_activity}").get_all_values()
     column_data = [row[column_index] for row in gear]
