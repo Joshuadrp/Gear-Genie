@@ -6,7 +6,7 @@ SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
-    ]
+]
 
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPE_CREDS = CREDS.with_scopes(SCOPE)
@@ -18,7 +18,7 @@ hiking_data = hiking_gear.get_all_values()
 
 # weather api key
 api_key = '6a3f2cc91e7c4aa8d6506c5f08f260e4'
-    
+
 def get_weather():
     """
     Gets weather from openweathermap API depending on users input! 
@@ -29,7 +29,7 @@ def get_weather():
         temp = None
         weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={location}&units=metric&APPID={api_key}")
         error_code = weather_data.json()['cod']
-    
+
         if error_code == 200:
             print("Location is valid.")
             weather = weather_data.json()['weather'][0]['description']
@@ -38,15 +38,10 @@ def get_weather():
             min_temp = weather_data.json()['main']['temp_min']
             humidity = weather_data.json()['main']['humidity']
             wind = weather_data.json()['wind']['speed']
-            visibility = weather_data.json()['visibility']
 
-            return weather, temp, feeling, min_temp, humidity, wind, visibility
+            return weather, temp, feeling, min_temp, humidity, wind
         else:
             print("Location is invalid, please provide another one.")
-
-        # print(weather, temp)
-        # print(error_code)
-        # print(weather_data.json())
 
 def display_weather_basic(weather, temp):
     """
@@ -55,23 +50,20 @@ def display_weather_basic(weather, temp):
     print(f"The forecast in your area is: {weather}.\nTemperature is currently {temp} degrees celsius.\nAfter reviewing the weather data, do you wish to continue?\n1.Yes\n2.No")
     while True:
         user_agree = input("Please choose: ")
-        if(user_agree.lower() == "yes"):
-            activity_input()
-            return 
-        elif(user_agree.lower() == "no"):
+        if user_agree.lower() == "yes":
+            return True
+        elif user_agree.lower() == "no":
             print("Program will be terminated.")
-            return
+            return False
         else:
-            print("Please select a valid option.")
-
+            print("Please select a valid option.\n1.Yes\n2.No")
 
 def activity_input():
     """
-    Gets users location and acivity
+    Gets users location and activity
     """
     print("Location received.\nNow, please enter which type of outdoor activity in order to advise you wisely.\nYou can choose the following:\n1.Climbing\n2.Hiking.\n")
     while True:
-        
         activity = input("Please enter outdoor activity: ")
         climbing = None
         column_index = None
@@ -81,64 +73,47 @@ def activity_input():
                 print("What type of climbing?\n1.Trad Climbing\n2.Sport Climbing\n3.Bouldering")
                 climbing = input("Please choose: ")
                 if climbing.lower() == "trad climbing":
-                    print("You need trad gear.\n")
-                    column_index = 0 #this will only give the basic gear, need to update it later. 
-                    fetch_gear_data(climbing, column_index)
-                    return
+                    column_index = 0  # this will only give the basic gear, need to update it later. 
+                    return climbing, column_index
                 elif climbing.lower() == "sport climbing":
-                    print("You need sport gear.\n")
-                    column_index = 0 #this will only give the basic gear, need to update it later.
-                    fetch_gear_data(climbing, column_index)
-                    return 
-                    
+                    column_index = 0  # this will only give the basic gear, need to update it later.
+                    return climbing, column_index
                 elif climbing.lower() == "bouldering":
-                    print("You need boulder gear.\n")
-                    column_index = 0 #this will only give the basic gear, need to update it later.
-                    fetch_gear_data(climbing, column_index)
-                    return 
+                    column_index = 0  # this will only give the basic gear, need to update it later.
+                    return climbing, column_index
                 else:
                     print("Please select the type of climbing from the options.\n")
-            
         elif activity.lower() == "hiking":
-            print("You need hiking gear.\n")
-            column_index = 0 #this will only give the basic gear, need to update it later.
-            fetch_gear_data(activity, column_index)
-            return
-        else: 
+            column_index = 0  # this will only give the basic gear, need to update it later.
+            return activity, column_index
+        else:
             print("Please choose one of the activities above.\n")
 
-    
 def fetch_gear_data(user_activity, column_index):
     """
     Fetch data from google sheets for hiking and climbing activities.
     """
     gear = SHEET.worksheet(f"{user_activity}").get_all_values()
     column_data = [row[column_index] for row in gear]
-    print(column_data)
-    return 
+    return column_data
 
-def final_message():
+def final_message(user_activity, column_index, weather, temp, feeling, min_temp, humidity, wind):
     """
     Displays final message with all the necessary information for the activity to be performed according to users input.
     """
-
+    gear_list = fetch_gear_data(user_activity, column_index)
+    print(f"You chose to go {user_activity}. Here's the weather forecast: {weather}\n"
+          f"With a temperature of: {temp}°C (feels like {feeling}°C), and a minimum temperature of {min_temp}°C\n"
+          f"Humidity: {humidity}%, Wind: {wind} m/s\n"
+          f"Recommended gear: {', '.join(gear_list)}")
 
 def main():
     """
     Run all the application functions
     """
-    weather, temp, feeling, min_temp, humidity, wind, visibility = get_weather()
-    display_weather_basic(weather, temp)
-
-    # column_index, user_activity = activity_input()
-    # fetched_gear = fetch_gear_data(user_activity, column_index)
-
-    # print(fetched_gear)
-    
-    # print(weather)
-    # print(temp)
-    # print(location)
-    # print(activity)
-    # print(climbing)
+    weather, temp, feeling, min_temp, humidity, wind = get_weather()
+    if display_weather_basic(weather, temp):
+        user_activity, column_index = activity_input()
+        final_message(user_activity, column_index, weather, temp, feeling, min_temp, humidity, wind)
 
 main()
