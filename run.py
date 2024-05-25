@@ -32,9 +32,15 @@ def get_weather():
     
         if error_code == 200:
             print("Location is valid.")
-            weather = weather_data.json()['weather'][0]['main']
+            weather = weather_data.json()['weather'][0]['description']
             temp = weather_data.json()['main']['temp']
-            return weather, temp
+            feeling = weather_data.json()['main']['feels_like']
+            min_temp = weather_data.json()['main']['temp_min']
+            humidity = weather_data.json()['main']['humidity']
+            wind = weather_data.json()['wind']['speed']
+            visibility = weather_data.json()['visibility']
+
+            return weather, temp, feeling, min_temp, humidity, wind, visibility
         else:
             print("Location is invalid, please provide another one.")
 
@@ -46,7 +52,7 @@ def display_weather_basic(weather, temp):
     """
     Displays basic weather info for user and let user choose to continue with app or terminate it.
     """
-    print(f"Weather is currently {weather}, with temperature of {temp}.\nAfter reviewing the weather data, do you wish to continue?\n1.Yes\n2.No")
+    print(f"The forecast in your area is: {weather}.\nTemperature is currently {temp} degrees celsius.\nAfter reviewing the weather data, do you wish to continue?\n1.Yes\n2.No")
     while True:
         user_agree = input("Please choose: ")
         if(user_agree.lower() == "yes"):
@@ -102,7 +108,6 @@ def activity_input():
             print("Please choose one of the activities above.\n")
 
     
-
 def fetch_gear_data(user_activity, column_index):
     """
     Fetch data from google sheets for hiking and climbing activities.
@@ -112,11 +117,17 @@ def fetch_gear_data(user_activity, column_index):
     print(column_data)
     return 
 
+def final_message():
+    """
+    Displays final message with all the necessary information for the activity to be performed according to users input.
+    """
+
+
 def main():
     """
     Run all the application functions
     """
-    weather, temp = get_weather()
+    weather, temp, feeling, min_temp, humidity, wind, visibility = get_weather()
     display_weather_basic(weather, temp)
 
     # column_index, user_activity = activity_input()
