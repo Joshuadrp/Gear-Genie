@@ -21,27 +21,39 @@ api_key = '6a3f2cc91e7c4aa8d6506c5f08f260e4'
 
 def get_weather():
     """
-    Gets weather from openweathermap API depending on users input! 
+    Gets weather from openweathermap API depending on user's input!
     """
     while True:
         location = input("Please enter desired location: ")
-        weather = None
-        temp = None
-        weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={location}&units=metric&APPID={api_key}")
-        error_code = weather_data.json()['cod']
+        
+        # Check if the input is a number (integer or float)
+        try:
+            float(location)
+            print("Location should not be a number, please provide an existing location.")
+            continue
+        except ValueError:
+            pass  # Input is not a number, proceed with the request
 
-        if error_code == 200:
-            print("Location is valid.")
-            weather = weather_data.json()['weather'][0]['description']
-            temp = weather_data.json()['main']['temp']
-            feeling = weather_data.json()['main']['feels_like']
-            min_temp = weather_data.json()['main']['temp_min']
-            humidity = weather_data.json()['main']['humidity']
-            wind = weather_data.json()['wind']['speed']
+        # Proceed with API request if input is valid
+        try:
+            weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={location}&units=metric&APPID={api_key}")
+            weather_data.raise_for_status()  # Raise an HTTPError for bad responses
+            error_code = weather_data.json().get('cod')
 
-            return weather, temp, feeling, min_temp, humidity, wind
-        else:
-            print("Location is invalid, please provide another one.")
+            if error_code == 200:
+                print("Location is valid.")
+                weather = weather_data.json()['weather'][0]['description']
+                temp = weather_data.json()['main']['temp']
+                feeling = weather_data.json()['main']['feels_like']
+                min_temp = weather_data.json()['main']['temp_min']
+                humidity = weather_data.json()['main']['humidity']
+                wind = weather_data.json()['wind']['speed']
+
+                return weather, temp, feeling, min_temp, humidity, wind
+            else:
+                print("Location is invalid, please provide another one.")
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}. Please try again.")
 
 def display_weather_basic(weather, temp):
     """
