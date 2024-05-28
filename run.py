@@ -3,6 +3,7 @@ import colorama
 import gspread
 from pyfiglet import figlet_format
 from colorama import Fore, Back, Style
+from tabulate import tabulate
 
 from google.oauth2.service_account import Credentials
 SCOPE = [
@@ -127,12 +128,13 @@ def fetch_gear_data(user_activity, column_index):
     Fetch data from google sheets for hiking and climbing activities.
     """
     gear = SHEET.worksheet(f"{user_activity}").get_all_values()
-    column_data = [row[column_index] for row in gear]
+    column_data = [row[column_index] for row in gear[1:]]
 
-    return column_data
-
+    # Creating a table with an index column
+    table = [(index + 1, value) for index, value in enumerate(column_data)]
+    display_table = (tabulate(table, headers=["", user_activity], tablefmt="grid"))
     
-
+    return display_table
 
 
 def final_message(user_activity, column_index, weather, temp, feeling, min_temp, humidity, wind):
@@ -143,7 +145,7 @@ def final_message(user_activity, column_index, weather, temp, feeling, min_temp,
     print(f"You chose to go {user_activity}. Here's the weather forecast: {Fore.CYAN}{weather}{Fore.RESET}\n"
           f"With a temperature of: {Fore.CYAN}{temp}°C (feels like {feeling}°C), and a minimum temperature of {min_temp}°C{Fore.RESET}\n"
           f"Humidity: {Fore.CYAN}{humidity}%, Wind: {wind} m/s{Fore.RESET}\n"
-          f"Recommended gear: {', '.join(gear_list)}\n"
+          f"Recommended gear:\n {gear_list}\n"
           f"We hope this information was helpful, see you later!\n{Fore.RED}Program will be terminated.{Fore.RESET}")
 
 def main():
