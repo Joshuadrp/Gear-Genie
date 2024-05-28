@@ -129,6 +129,8 @@ def fetch_gear_data(user_activity, column_index):
     gear = SHEET.worksheet(f"{user_activity}").get_all_values()
     column_data = [row[column_index] for row in gear]
 
+    return column_data
+
     
 
 
