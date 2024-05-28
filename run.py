@@ -24,7 +24,7 @@ def get_weather():
     Gets weather from openweathermap API depending on user's input!
     """
     while True:
-        location = input("Please enter desired location: ")
+        location = input("Please enter desired location:\n")
         
         # Check if the input is a number (integer or float)
         try:
@@ -61,7 +61,7 @@ def display_weather_basic(weather, temp):
     """
     print(f"The forecast in your area is: {weather}.\nTemperature is currently {temp} degrees celsius.\nAfter reviewing the weather data, do you wish to continue?\n1.Yes\n2.No")
     while True:
-        user_agree = input("Please choose: ")
+        user_agree = input("Please choose:\n")
         if user_agree.lower() == "yes":
             return True
         elif user_agree.lower() == "no":
@@ -76,14 +76,14 @@ def activity_input():
     """
     print("Location received.\nNow, please enter which type of outdoor activity in order to advise you wisely.\nYou can choose the following:\n1.Climbing\n2.Hiking.\n")
     while True:
-        activity = input("Please enter outdoor activity: ")
+        activity = input("Please enter outdoor activity:\n")
         climbing = None
         column_index = None
 
         if activity.lower() == "climbing":
             while True:
                 print("What type of climbing?\n1.Trad Climbing\n2.Sport Climbing\n3.Bouldering")
-                climbing = input("Please choose: ")
+                climbing = input("Please choose:\n")
                 if climbing.lower() == "trad climbing":
                     column_index = 0  # this will only give the basic gear, need to update it later. 
                     return climbing, column_index
