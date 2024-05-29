@@ -175,13 +175,19 @@ def final_message(
         f"Recommended gear:\n {gear_list}\n"
         f"We hope this information was helpful, see you later!\n"
     )
-    terminate = input("Do you want to terminate program?" 
-    "Select 1.Yes or 2.No\n")
-    if terminate.lower() == "yes" or terminate == "1":
-        print(f"{Fore.RED}Program will be terminated.{Fore.RESET}")
-    elif terminate.lower() == "no" or terminate == "2":
-        print(f"{Fore.RED}Program will restart!!{Fore.RESET}")
-        main()
+    while True:
+        print(Fore.BLUE)
+        terminate = input("Do you want to terminate program? " 
+        "Select 1.Yes or 2.No\n")
+        print(Fore.RESET)
+        if terminate.lower() == "yes" or terminate == "1":
+            print(f"{Fore.RED}Program will be terminated.{Fore.RESET}")
+            return True
+        elif terminate.lower() == "no" or terminate == "2":
+            print(f"{Fore.RED}Program will restart!!{Fore.RESET}")
+            return False
+        else:
+            print("Please select a valid option. 1.Yes or 2.No")
 
 
 def main():
@@ -189,13 +195,16 @@ def main():
     Runs all the application functions.
     """
     introduction()
-    weather, temp, feeling, min_temp, humidity, wind = get_weather()
-    if display_weather_basic(weather, temp):
-        user_activity, column_index = activity_input()
-        final_message(
-            user_activity, column_index, weather, temp, feeling, min_temp,
-            humidity, wind
-        )
+    while True:
+        weather, temp, feeling, min_temp, humidity, wind = get_weather()
+        if display_weather_basic(weather, temp):
+            user_activity, column_index = activity_input()
+            if final_message(
+                user_activity, column_index, weather, temp, feeling, min_temp,
+                humidity, wind
+            ):
+                break
+    
 
 
 main()
