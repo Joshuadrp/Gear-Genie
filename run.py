@@ -174,8 +174,14 @@ def final_message(
         f"Humidity: {Fore.CYAN}{humidity}%, Wind: {wind} m/s{Fore.RESET}\n"
         f"Recommended gear:\n {gear_list}\n"
         f"We hope this information was helpful, see you later!\n"
-        f"{Fore.RED}Program will be terminated.{Fore.RESET}"
     )
+    terminate = input("Do you want to terminate program?" 
+    "Select 1.Yes or 2.No\n")
+    if terminate.lower() == "yes" or terminate == "1":
+        print(f"{Fore.RED}Program will be terminated.{Fore.RESET}")
+    elif terminate.lower() == "no" or terminate == "2":
+        print(f"{Fore.RED}Program will restart!!{Fore.RESET}")
+        main()
 
 
 def main():
