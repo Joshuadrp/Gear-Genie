@@ -146,12 +146,12 @@ def climbing_type_input():
             print("Please select the type of climbing from the options.\n")
 
 
-def fetch_gear_data(user_activity, column_index):
+def fetch_gear_data(user_activity, col_index):
     """
     Fetches data from Google Sheets for hiking and climbing activities.
     """
     gear = SHEET.worksheet(user_activity).get_all_values()
-    column_data = [row[column_index] for row in gear[1:]]
+    column_data = [row[col_index] for row in gear[1:]]
 
     # Creating a table with an index column
     table = [(index + 1, value) for index, value in enumerate(column_data)]
@@ -159,26 +159,28 @@ def fetch_gear_data(user_activity, column_index):
 
 
 def final_message(
- user_activity, column_index, weather, temp, feeling, min_temp, humidity, wind
+    user_activity, col_index, weather, temp, feeling, min_temp, humidity, wind
 ):
     """
     Displays final message with all the necessary information for the chosen
     activity.
     """
-    gear_list = fetch_gear_data(user_activity, column_index)
+    gear_list = fetch_gear_data(user_activity, col_index)
     print(
         f"You chose to go {user_activity}.\nHere's the weather forecast: "
         f"{Fore.CYAN}{weather}{Fore.RESET}\n"
         f"With a temperature of:{Fore.CYAN}{temp}°C (feels like {feeling}°C), "
-        f"and a minimum temperature of {min_temp}°C{Fore.RESET}\n"
+        f"and a minimum temperature of "
+        f"{min_temp}°C{Fore.RESET}\n"
         f"Humidity: {Fore.CYAN}{humidity}%, Wind: {wind} m/s{Fore.RESET}\n"
         f"Recommended gear:\n {gear_list}\n"
         f"We hope this information was helpful, see you later!\n"
     )
     while True:
         print(Fore.BLUE)
-        terminate = input("Do you want to terminate program? " 
-        "Select 1.Yes or 2.No\n")
+        terminate = input(
+            "Do you want to terminate program? Select 1.Yes or 2.No\n"
+        )
         print(Fore.RESET)
         if terminate.lower() == "yes" or terminate == "1":
             print(f"{Fore.RED}Program will be terminated.{Fore.RESET}")
@@ -198,15 +200,14 @@ def main():
     while True:
         weather, temp, feeling, min_temp, humidity, wind = get_weather()
         if display_weather_basic(weather, temp):
-            user_activity, column_index = activity_input()
+            user_activity, col_index = activity_input()
             if final_message(
-                user_activity, column_index, weather, temp, feeling, min_temp,
+                user_activity, col_index, weather, temp, feeling, min_temp,
                 humidity, wind
             ):
                 break
         else:
             break
-    
 
 
 main()
