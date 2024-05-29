@@ -204,6 +204,8 @@ def main():
                 humidity, wind
             ):
                 break
+        else:
+            break
     
 
 
