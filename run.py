@@ -86,42 +86,39 @@ def display_weather_basic(weather, temp):
 
 def activity_input():
     """
-    Gets users location and activity
+    Gets the user's chosen activity.
     """
-    print("Location received.\nNow, please enter which type of outdoor activity in order to advise you wisely.\nYou can choose the following:\n1.Climbing\n2.Hiking\n3.Other")
+    print(
+        "Location received.\nNow, please enter which type of outdoor activity in order to advise you wisely.\n"
+        "You can choose the following:\n1. Climbing\n2. Hiking\n3. Other"
+    )
     while True:
-        activity = input(Fore.BLUE + "Please enter outdoor activity:\n")
-        print(Fore.RESET)
-        climbing = None
-        column_index = None
-
-        if activity.lower() == "climbing":
-            while True:
-                print("What type of climbing?\n1.Trad Climbing\n2.Sport Climbing\n3.Bouldering")
-                climbing = input(Fore.BLUE + "Please choose:\n")
-                print(Fore.RESET)
-                if climbing.lower() == "trad climbing":
-                    climbing = "trad climbing"
-                    column_index = 0  # this will only give the basic gear, need to update it later. 
-                    return climbing, column_index
-                elif climbing.lower() == "sport climbing":
-                    climbing = "sport climbing"
-                    column_index = 0  # this will only give the basic gear, need to update it later.
-                    return climbing, column_index
-                elif climbing.lower() == "bouldering":
-                    climbing = "bouldering"
-                    column_index = 0  # this will only give the basic gear, need to update it later.
-                    return climbing, column_index
-                else:
-                    print("Please select the type of climbing from the options.\n")
-        elif activity.lower() == "hiking":
-            activity = "hiking"
-            column_index = 0  # this will only give the basic gear, need to update it later.
-            return activity, column_index
-        elif activity.lower() == "other":
-            print("More sports will be available soon! In the meantime, you can get started with the two activities we support. 1.Climbing or 2.Hiking")
+        activity = input(Fore.BLUE + "Please enter outdoor activity:\n" + Fore.RESET).lower()
+        if activity == "climbing":
+            return climbing_type_input()
+        elif activity == "hiking":
+            return "hiking", 0
+        elif activity == "other":
+            print("More sports will be available soon! In the meantime, you can get started with the two activities we support. 1. Climbing or 2. Hiking")
         else:
-            print("Please choose one of the activities we support. 1.Climbing or 2.Hiking\n")
+            print("Please choose one of the activities we support. 1. Climbing or 2. Hiking\n")
+
+
+def climbing_type_input():
+    """
+    Gets the type of climbing activity from the user.
+    """
+    while True:
+        print("What type of climbing?\n1. Trad Climbing\n2. Sport Climbing\n3. Bouldering")
+        climbing = input(Fore.BLUE + "Please choose:\n" + Fore.RESET).lower()
+        if climbing == "trad climbing":
+            return "trad climbing", 0
+        elif climbing == "sport climbing":
+            return "sport climbing", 0
+        elif climbing == "bouldering":
+            return "bouldering", 0
+        else:
+            print("Please select the type of climbing from the options.\n")
 
 def fetch_gear_data(user_activity, column_index):
     """
