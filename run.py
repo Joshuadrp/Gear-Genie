@@ -136,11 +136,11 @@ def climbing_type_input():
             "Bouldering"
         )
         climbing = input(Fore.BLUE + "Please choose:\n" + Fore.RESET).lower()
-        if climbing == "trad climbing":
+        if climbing == "trad climbing" or climbing == "1":
             return "trad climbing", 0
-        elif climbing == "sport climbing":
+        elif climbing == "sport climbing" or climbing == "2":
             return "sport climbing", 0
-        elif climbing == "bouldering":
+        elif climbing == "bouldering" or climbing == "3":
             return "bouldering", 0
         else:
             print("Please select the type of climbing from the options.\n")
