@@ -87,9 +87,9 @@ def display_weather_basic(weather, temp):
     )
     while True:
         user_agree = input(Fore.BLUE + "Please choose:\n" + Fore.RESET).lower()
-        if user_agree == "yes":
+        if user_agree == "yes" or user_agree == "1":
             return True
-        elif user_agree == "no":
+        elif user_agree == "no" or user_agree == "2":
             print(Fore.RED + "Program will be terminated." + Fore.RESET)
             return False
         else:
@@ -121,8 +121,8 @@ def activity_input():
             )
         else:
             print(
-                "Please choose one of the activities we support. 1. Climbing "
-                "or 2. Hiking\n"
+                "Please choose one of the activities we support. 1.Climbing "
+                ", 2.Hiking or 3.Other\n"
             )
 
 
@@ -167,7 +167,7 @@ def final_message(
     """
     gear_list = fetch_gear_data(user_activity, column_index)
     print(
-        f"You chose to go {user_activity}. Here's the weather forecast: "
+        f"You chose to go {user_activity}.\nHere's the weather forecast: "
         f"{Fore.CYAN}{weather}{Fore.RESET}\n"
         f"With a temperature of:{Fore.CYAN}{temp}°C (feels like {feeling}°C), "
         f"and a minimum temperature of {min_temp}°C{Fore.RESET}\n"
