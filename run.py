@@ -109,11 +109,11 @@ def activity_input():
         print(Fore.BLUE)
         activity = input("Please enter outdoor activity:\n").lower()
         print(Fore.RESET)
-        if activity == "climbing":
+        if activity == "climbing" or activity == "1":
             return climbing_type_input()
-        elif activity == "hiking":
+        elif activity == "hiking" or activity == "2":
             return "hiking", 0
-        elif activity == "other":
+        elif activity == "other" or activity == "3":
             print(
                 "More sports will be available soon! In the meantime, you can "
                 "get started with the two activities we support. 1. Climbing "
