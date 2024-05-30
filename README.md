@@ -203,6 +203,20 @@ These tests were performed once the gear data was displayed in a table. Program 
 ### Google Services:
 - **Google Sheets**: Used to store and retrieve gear data for various outdoor activities.
 
+Find below the tables used for each activity, also a link is included, permission must be granted in order to access it [Google spreadsheets](https://docs.google.com/spreadsheets/d/1dl7ZPqWiStUOXFebMnAsf6YJgd9jzYD2yC36nP1keJI/edit?usp=sharing): 
+
+**Hiking**
+![Hiking](/assets/images/hiking_ws.png)
+
+**Sport Climbing**
+![Hiking](/assets/images/sportcb_ws.png)
+
+**Trad Climbing**
+![Hiking](/assets/images/tradcb_ws.png)
+
+**Bouldering**
+![Hiking](/assets/images/bouldering_ws.png)
+
 ## Deployment
 
 ### Heroku
