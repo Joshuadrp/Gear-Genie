@@ -27,11 +27,15 @@ def introduction():
     """
     print(figlet_format("Gear Genie\nJust for you!", font="doom"))
     print(
-        "This app was made for outdoor enthusiasts! You will know what type "
-        "of gear you need to perform certain activities weather depending. "
-        "Instructions:\n1. Input location\n2. Input choice if to continue "
-        "or not.\n3. Select activity to perform.\n4. Analyze gear needed for "
-        "that activity. Now we are all sorted, here we go!\n"
+        "This app was made for outdoor enthusiasts! You will know what type"
+        " of gear you need to perform certain activities weather depending. "
+        "Instructions:\n1. Input location(it will be validated).\n"
+        "2.Input wether to continue or not given the basic weather data.\n"
+        "3.Choose activity to perform.\n"
+        "4.Get advanced weather data and gear data displayed.\n"
+        "5.Input yes or 1 to terminate program, no or 2 to restart.\n"
+        "6.Proceed with step 1 again.\n"
+        "Now we are all sorted, here we go!\n"
     )
 
 

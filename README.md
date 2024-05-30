@@ -10,6 +10,17 @@
 
 Gear Genie is an app made for outdoor enthusiasts. User will input a location and based on basic weather data fetched from openweathermap API, user will decide if to continue or not. If user continues then he must choose an activity to perform, and based on that input, gear data will be fetch from google sheets and it will be displayed in a table format. 
 
+### Instructions
+
+The app is flexible regarding users input. Whenever user needs to input data, the actual answer can be typed (for example in activity, you can type climbing or 1, and both would work.) The program follows the flow below: 
+
+1. Input location(it will be validated)
+2. Input wether to continue or not given the basic weather data.
+3. Choose activity to perform.
+4. Get advanced weather data and gear data displayed.
+5. Input yes or 1 to terminate program, no or 2 to restart.
+6. Proceed with step 1 again.
+
 ## User Stories
 
 ### User's goals:
@@ -42,13 +53,15 @@ When the program is first run, a banner with the app name is displayed and an in
 
 ![Users Choice](/assets/images/basicw_data.png)
 
-After validating the location, basic weather information will be displayed. The app then will ask the user if he/she wishes to continue. If answer is no, then program will be terminated. If answer is yes, program will continue to run. 
+After validating the location, basic weather information will be displayed. The app then will ask the user if he/she wishes to continue. If answer is no, then program will be terminated. If answer is yes, program will continue to run. You can see the result when No is chosen: 
+
+![Users Choice](/assets/images/terminate_user_choice.png)
 
 ### Activity
 
 ![Activity to perform](/assets/images/activity.png)
 
-User will be asked to input which type of activity wishes to perform. Three options are given, and the input will be validated, if not valid then program will ask the user to input again. If user chooses climbing another three options will be given, if user chooses hiking the gear data for hiking will be fetched from google sheets and displayed. If User chooses other, a message will display stating that more activities will be available soon.
+User will be asked to input which type of activity wishes to perform. Three options are given(user can input the actual activity name or the number of the desired activity), and the input will be validated, if not valid then program will ask the user to input again. If user chooses climbing another three options will be given, if user chooses hiking the gear data for hiking will be fetched from google sheets and displayed. If User chooses other, a message will display stating that more activities will be available soon.
 
 ### Climbing
 
@@ -73,6 +86,16 @@ When hiking activity is chosen, then app will display a table populated with gea
 ![Other](/assets/images/other.png)
 
 When other activity is selected, a message will be displayed stating that more activities will be available soon, and it will ask the user for another input(the two activities which the program has available)
+
+### Restart or Terminate Program
+
+Once the gear data is displayed in the table, the user will be asked if he/she wants to restart the program or terminate it. 
+
+![Restart](/assets/images/restart_program.png)
+
+And in case user chooses to terminate program you can see the result below. 
+
+![Terminate](/assets/images/terminate_program.png)
 
 ## Logic Flow
 
@@ -110,17 +133,18 @@ The location had to be validated for digits specifically because the weahter API
 #### Users Choice
 | Feature Tested                                                        | Expected Outcome                                 | Actual Outcome                                   |
 | --------------------------------------------------------------------- | ------------------------------------ | --------------------------------- |                             
-| Input a valid choice(no) | Program terminates| Expected outcome             |
-| Input a valid choice(yes) | Program proceeds and asks user to input desired activity.| Expected outcome             |
-| Input an invalid choice(anything except yes or no) | Program asks user to input a valid choice. | Expected outcome             |
+| Input a valid choice(no or 2) | Program terminates| Expected outcome             |
+| Input a valid choice(yes or 1) | Program proceeds and asks user to input desired activity.| Expected outcome             |
+| Input an invalid choice(anything but yes, no, 1 or 2) | Program asks user to input a valid choice. | Expected outcome             |
+| Input **no** or **2** after user restarts program once gear data is displayed. | Program terminates. | Expected outcome |
 
 #### Activity
 | Feature Tested                                                        | Expected Outcome                                 | Actual Outcome                                   |
 | --------------------------------------------------------------------- | ------------------------------------ | --------------------------------- |                             
-| Input a valid choice(climbing) | Program proceeds to ask what type of climbing the user want to perform. | Expected outcome             |
-| Input a valid choice(hiking) | Program proceeds to display advanced weather data and displays a table with gear data to be used in that activity. | Expected outcome |
-| Input a valid choice(other) | Program displays a message stating that new activities will be available soon and ask user for another input. | Expected outcome             |
-| Input an invalid choice(anything but hiking,climbing,other.) | Program asks user to choose a valid activity. | Expected outcome             |
+| Input a valid choice(climbing or 1) | Program proceeds to ask what type of climbing the user want to perform. | Expected outcome             |
+| Input a valid choice(hiking or 2) | Program proceeds to display advanced weather data and displays a table with gear data to be used in that activity. | Expected outcome |
+| Input a valid choice(other or 3) | Program displays a message stating that new activities will be available soon and ask user for another input. | Expected outcome             |
+| Input an invalid choice(anything but hiking,climbing,other,1,2 or 3) | Program asks user to choose a valid activity. | Expected outcome             |
 
 #### Type of Climbing
 | Feature Tested                                                        | Expected Outcome                                 | Actual Outcome                                   |
@@ -129,6 +153,16 @@ The location had to be validated for digits specifically because the weahter API
 | Input a valid choice(sport climbing) | Program proceeds to display advanced weather data and displays a table with gear data to be used in that activity.  | Expected outcome |
 | Input a valid choice(bouldering) | Program proceeds to display advanced weather data and displays a table with gear data to be used in that activity.  | Expected outcome |
 | Input an invalid choice(anything but trad climbing, sport climbing or bouldering) | Program asks user to choose a valid type of climbing. | Expected outcome |
+
+#### Restart or Terminate Program
+
+These tests were performed once the gear data was displayed in a table. Program will ask user if he/she wants to terminate the program. If user chooses yes or 1, then program will be terminated. If user chooses no or 2, program will execute again.
+
+| Feature Tested                                                        | Expected Outcome                                 | Actual Outcome                                   |
+| --------------------------------------------------------------------- | ------------------------------------ | --------------------------------- |                             
+| Input a valid choice(yes or 1) | Program terminates. | Expected outcome |
+| Input a valid choice(no or 2) | Program restarts and asks user to input a location. | Expected outcome |
+| Input an invalid option(anything but yes, no, 1 or 2) | Program asks user to input a valid option. | Expected outcome |
 
 ## Bugs Encountered and Fixes Implemented
 
@@ -150,7 +184,7 @@ The location had to be validated for digits specifically because the weahter API
 7. **Bug**: Incorrect index used to fetch gear data in `fetch_gear_data` function.
    - **Fix**: Adjusted the column index to start fetching data from the second row, avoiding fetching the header row.
 
-8. **Bug**: Program was not terminating when gear data was fetched for the activity.
+8. **Bug**: Program was not terminating when user chose to terminate program after gear data was fetched for the activity.
    - **Fix**: Created an If statement in Main function to ensure proper function flow.
 
 ## Technologies Used
@@ -171,6 +205,8 @@ The location had to be validated for digits specifically because the weahter API
 
 ## Deployment
 
+### Heroku
+
 The project was deployed to Heroku using the following steps:
 
 1. Sign in to Heroku and access the dashboard
@@ -190,7 +226,34 @@ The project was deployed to Heroku using the following steps:
 15. Then underneath, make sure the branch for the project is "main" and click on the "Deploy" button
 16. Wait for Heroku to display that the app was deployed successfully
 
-### Code
+### Forking the GitHub Repository
+
+By forking the repository, we make a copy of the original repository on our GitHub account to view and change without affecting the original repository by using these steps:
+
+1. Log in to GitHub and locate [GitHub Repository Gear Genie](https://github.com/Joshuadrp/Gear-Genie.git)
+2. At the top of the Repository(under the main navigation) locate "Fork" button.
+3. Now you should have a copy of the original repository in your GitHub account.
+
+### Local Clone
+
+1. Log in to GitHub and locate [GitHub Repository Gear Genie](https://github.com/Joshuadrp/Gear-Genie.git)
+2. Under the repository name click "Clone or download"
+3. Click on the code button, select clone with HTTPS, SSH or GitHub CLI and copy the link shown.
+4. Open Git Bash
+5. Change the current working directory to the location where you want the cloned directory to be made.
+6. Type `git clone` and then paste The URL copied in the step 3.
+7. Press Enter and your local clone will be created.
+
+### Gitpod
+
+Gitpod workspace was used. Workspace was created using Github's repository. To get this link: 
+
+1. Go to the desired repository in github. On the top right center click the ***Code*** button. 
+2. Press Local and select HTTPS. 
+3. Copy link and create workspace in Gitpod.
+4. Happy coding!
+
+## Code
 
 - Code to fetch weather data was influened by openweathermap documentation [Open Weather Map API](https://openweathermap.org/current)
 - Code to fetch data from google sheets was influenced by love sandwiches project [Love Sandwiches Project](https://github.com/Joshuadrp/LoveSandwiches.git)
