@@ -25,7 +25,7 @@ def introduction():
     """
     Introduces the user to the app and provides relevant information.
     """
-    print(figlet_format("Gear Genie\nJust for you!", font="doom"))
+    print(figlet_format("Gear Genie", font="doom"))
     print(
         "This app was made for outdoor enthusiasts! You will know what type"
         " of gear you need to perform certain activities weather depending. "
